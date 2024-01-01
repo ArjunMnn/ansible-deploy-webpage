@@ -1,0 +1,23 @@
+---
+- name: Install Nginx and deploy a custom webpage
+  hosts: servers
+  become: true
+  tasks:
+    - name: Update package cache
+      apt:
+        update_cache: yes
+    - name: Install Nginx
+      package:
+        name: nginx
+        state: present
+    - name: Start Nginx service
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+
+    - name: copy custom webpage files
+      copy: 
+        src: /home/ubuntu/todo/
+        dest: /var/www/html/
+      
